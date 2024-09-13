@@ -1,0 +1,559 @@
+[
+  {
+    "question": "Still available? I missed this",
+    "responses": [
+      "Yep, you can still register on Devfolio's website! Submissions are due June 30th."
+    ]
+  },
+  {
+    "question": "Does anyone maintain an EAS schema for delegates on Optimism?",
+    "responses": [
+      [
+        "There's a schema for badgeholders 👀 ",
+        {
+          "type": "link",
+          "text": "https://optimism.easscan.org/schema/view/0xfdcfdad2dbe7489e0ce56b260348b7f14e8365a8a325aef9834818c00d46b31b"
+        },
+        ""
+      ]
+    ]
+  },
+  {
+    "question": "Hi, I tied gitcoin with my coinbase account. eas shows waiting for proof. How long do I have to wait? Is there an administrator?",
+    "responses": [
+      "This should be fixed now. There was a pause with the indexer api. Attestations were still onchain."
+    ]
+  },
+  {
+    "question": "Can you please share your code? Perhaps a GitHub repo with example?",
+    "responses": [
+      "I just copied and pasted the example code from the Make an Attestation section, in the \"Example O chain Attestation with the SDK\"\n\nI deployed the 3 contracts on ganache locally through remix\nCopied the SDK code and just changed the EAS address and schemaUID to the deployed ones\n\nThe only difference is the Signer I'm using a private key but I don't think that's the issue \n\nI also tried calling the function from remix and I also get a Gas error"
+    ]
+  },
+  {
+    "question": "Can a resolver address take an action when an attestation is revoked?",
+    "responses": [
+      [
+        "Yes there is a ",
+        {
+          "type": "code",
+          "text": "onRevoke"
+        },
+        " function that you could add to your schema resolver\n\n",
+        {
+          "type": "link",
+          "text": "https://github.com/ethereum-attestation-service/eas-contracts/blob/62536759886d4a0f3d4ab01710eaa23031459e0b/contracts/resolver/examples/TokenResolver.sol#L35-L37"
+        }
+      ]
+    ]
+  },
+  {
+    "question": "would it be possible for EAS SDK 2.x to use Ethers v5 ?",
+    "responses": [
+      "It’s not recommended and mostly untested, but you can try using wagmi’s wrapper"
+    ]
+  },
+  {
+    "question": "i don't see EAS on the devfolio submission rn. will that be added?",
+    "responses": [
+      [
+        {
+          "type": "link",
+          "text": "https://eas-onchain-summer.devfolio.co/"
+        }
+      ]
+    ]
+  },
+  {
+    "question": "Hey all! I was wondering if anyone had examples of getting the EAS SDK up and running with Viem? I saw the wagmi hooks but trying to stick with viem in my stack. I think I'm getting close but keep getting some weird errors about invalid arguments",
+    "responses": [
+      [
+        "The wagmi hooks should work for just viem as well. Check these docs: ",
+        {
+          "type": "link",
+          "text": "https://wagmi.sh/react/guides/ethers"
+        }
+      ]
+    ]
+  },
+  {
+    "question": "Hi everyone, is the Coinbase Onchain Verifications (Additional Rewards) track of the Onchain Summer Buildathon different from the EAS Attestation Summer? Can we build 1 project and apply into two hackathons ?",
+    "responses": [
+      "Yes they are separate! You can apply to both hackathons with the same idea."
+    ]
+  },
+  {
+    "question": "2.2.0?",
+    "responses": [
+      "Can you delete your node_modules and try reinstalling it?"
+    ]
+  },
+  {
+    "question": "Hi team, I'm wondering which is the more useful data to store to preserve the underlying data if we are otherwise ipfs indexing it.\n\nIs it better to consider the offchainAttestation the source of truth for the attestation, or the createOffchainUrl(sig, signer) path as the source of truth?\n\nIt seems that the offchainAttestation object is the actual 712 signed message, but the offchainUrl is slightly more usable and should contain within it the offchainAttestation as a parseable sub object, even if EAS stopped hosting its FE. Is that correct?",
+    "responses": [
+      "i'd think so  because unpublished attestations can be passed around via the url only. but would love to get clarification from the team as well",
+      "Either is okay since they can be converted back and forth"
+    ]
+  },
+  {
+    "question": "There are any debates regarding the arguments being hashed in the schemas? Currently only the resolver, abi and revocable are present. But I ran into a situation where I have two schemas that must be revocable, use the same resolver, and need no data types (empty abi), but I can't aggregate them because they mean diferent badges (one is a manager, other is an user). Would be nice to have a naming convention or versioning when generating the schema uid. Is this subjected to debate?",
+    "responses": [
+      "Can you describe your use case so I can help better?"
+    ]
+  },
+  {
+    "question": "Can you describe your use case so I can help better?",
+    "responses": [
+      "Assuming I have two entities, a manager and a person, while hosting a crypto event, I want the managers to fall under X schema while the users under Z schema, aggregating them separatedely. Both schemas are not revocable, use the same resolver, and there is no need for data, only the badge itself. In this case the schema UID wil be the same, and the data from both of them will become a single table. I want to maintain them separatedly but the only way to change the UID seems to change the data abi"
+    ]
+  },
+  {
+    "question": "Hi team, there are 4 addresses listed for some chains - EAS, SchemaRegistry, EIP712Proxy and then Indexer. why do some chains have only the first two? does this mean they don't support delegated attestations or indexing yet?",
+    "responses": [
+      "All chains support delegated attestations. The EIP712Proxy is only a helper contract. Anyone can deploy it. Same for the indexer but in general we like to deploy an official indexer on each chain. Which chains are you focusing on?"
+    ]
+  },
+  {
+    "question": "> The EIP712Proxy is only a helper contract\ncan you expand on this?",
+    "responses": [
+      "EIP712Proxy contract can be used like a software library in order to create a contract that does delegated attestations where the users pay for the contract to attest.\n\nYou can still copy the logic or deploy this same contract on any chain without any difference in operation"
+    ]
+  },
+  {
+    "question": "Does this offer a model for a user to authorize another EOA to make delegations on their behalf? Or just from the contract address only?",
+    "responses": [
+      "You can accomplish this without the contract using standard delegated attestations. A delegator can sign a delegated attestation which gets paid for by another entity"
+    ]
+  },
+  {
+    "question": "Hi guys, wanted to confirm that there is no way for a resolver contract to make an attestation that references the attestation it is about to resolve? For example, can an order attestation resolver attest (with a different schema) that the order is paid while referencing the soon to be order attestation?",
+    "responses": [
+      "It is true you cannot use refUID this way currently (this may be changed in an upcoming release). Another options is you can compute the UID and attest using a schema that has a bytes32 field referencing the attestation UID. It just wont work with the standard refUID field since the hook will run before the attestation exists."
+    ]
+  },
+  {
+    "question": "can the recipient and the attester address be the same? exploring a use case for self-attestation",
+    "responses": [
+      "Absolutely. The recipient can also be zero address which conveys an attestation made but to no one specific. Could be used for a tweet attestation for example"
+    ]
+  },
+  {
+    "question": "You have some dependency that forces ethers v5. It’s hard to tell which one from your snippets. Can you try deleting your node_modules folder and reinstalling everything? Can you try reproducing it on a sample project, mimicking your dependencies?",
+    "responses": [
+      [
+        "Thanks. The 5.x version of ethers don’t exist in node_modules as far as I can see. Do you know which of the “",
+        {
+          "type": "mention",
+          "text": "@ethersproject"
+        },
+        "/xxx” packages might cause the same issue? Isolating is hard in this case as the colission with other parts of a growing codebase is the issue to solve."
+      ]
+    ]
+  },
+  {
+    "question": "Is there a way to retrieve like 300.000 attestations easily and relatively fast to do some local analysis?\n\nDune doesn't count as it's quite expensive for an individual",
+    "responses": [
+      "Perhaps using a local node?"
+    ]
+  },
+  {
+    "question": "Hey crew! I was wondering if there is now any way to add a resolver contract to an existing schema? Or am I stuck having to make a completely new schema?",
+    "responses": [
+      "Yeah, it’s not possible. You should create a new schema"
+    ]
+  },
+  {
+    "question": "Perhaps using a local node?",
+    "responses": [
+      "Would an EAS indexer be suitable for this case?"
+    ]
+  },
+  {
+    "question": "Would an EAS indexer be suitable for this case?",
+    "responses": [
+      "You can run an indexer, or use thegraph, ponder, subsquid, etc"
+    ]
+  },
+  {
+    "question": "Are there any current projects that provide a comprehensive overview of attestations across multiple applications?",
+    "responses": [
+      [
+        "This is the best explanation video i found and should get you from 0 to your first schema + attestation\n ",
+        {
+          "type": "link",
+          "text": "https://youtu.be/DMGj5GNll0k?si=EXuvfCFFF6A-Mu4m"
+        }
+      ]
+    ]
+  },
+  {
+    "question": "hi eas team, I'm getting a similar failure as this and i believe my resolver contract is set up fine. can i get some help with figuring out what the issue is?",
+    "responses": [
+      "Make sure that you are using the latest SDK. There were backward compatibility bugs that resulted in these errors"
+    ]
+  },
+  {
+    "question": "I want to build custom Resolver Contract for our Schema. I do not know how to decode data from Attestation? Plz help me",
+    "responses": [
+      [
+        {
+          "type": "link",
+          "text": "https://github.com/ethereum-attestation-service/eas-contracts-example/blob/master/contracts/LogResolver.sol"
+        },
+        "\n\nYou can refer to this"
+      ]
+    ]
+  },
+  {
+    "question": "How to decode on Resolver by solidity?",
+    "responses": [
+      "Check the LogResolver contract here, you can use abi.decode to fetch encoded data"
+    ]
+  },
+  {
+    "question": "Hey everyone,\n\nIs it possible to enable people to sign an onchain attestation (delegated and gas-sponsored) using Sign In With Farcaster?\n\nThe idea is that a person would authenticate by signing in with their Farcaster wallet. After that, they could provide a signature that's used for a delegated attestation.\n\nThanks!",
+    "responses": [
+      "Ya ofcourse farcaster is just another kind of siwe / basically a wallet provider as far as complexity of integrating"
+    ]
+  },
+  {
+    "question": "Nice! Do you know of an open source repo that shows how to do it with eas? Will figure it out myself otherwise but would give me a nice headstart",
+    "responses": [
+      [
+        "Not off the top of my head no tbh -\nframes + eas integration is that new new\n\nOne of our branches in our project will have eas + frames integrated for receipts but the attestation happens in background: ",
+        {
+          "type": "link",
+          "text": "https://devfolio.co/projects/frames-easy-bb9b"
+        }
+      ]
+    ]
+  },
+  {
+    "question": "Does it happen on cell network as well?",
+    "responses": [
+      "Yes both on mobile and desktop"
+    ]
+  },
+  {
+    "question": "Hey guys, does somebody know if you would be able to sign an attestation with a smart contract account?",
+    "responses": [
+      "Smart contracts can make attestations"
+    ]
+  },
+  {
+    "question": "Hey guys! Is there maybe someone working or an already working app for signing documents? Kind of DocuSign for EAS?",
+    "responses": [
+      [
+        "You could take a look at this schema for inspiration: ",
+        {
+          "type": "link",
+          "text": "https://sepolia.easscan.org/attestation/attestWithSchema/0xd3f24e873e8df2d9bb9af6f08ea1ddf61f65754d023f3ea761081e3e6a226a80"
+        }
+      ]
+    ]
+  },
+  {
+    "question": "gm, i'm trying to create a new scheme using the no -code ui, but getting the error. any idea ?",
+    "responses": [
+      "Schema variable names should not have any spaces or special characters. They should be written in camelCase"
+    ]
+  },
+  {
+    "question": "Hey guys! Are there any templates of upgradeable schema resolver contracts out there? Has anyone built this yet?",
+    "responses": [
+      [
+        "All our resolvers are upgradeable, here is one for example: ",
+        {
+          "type": "link",
+          "text": "https://github.com/show-karma/gap-contracts/blob/main/contracts/ProjectResolver.sol"
+        }
+      ]
+    ]
+  },
+  {
+    "question": "gm , any dev here that can help me with integrating this scheme to an app we've build ? basically we need to allow users to create attestation from a form they submit in the previous step (thus i want to pass the parameters from that form to the attestation creation app",
+    "responses": [
+      "its pretty straight forward to use the sdk for attestations - you can copy the code almost right from the site then just pass in the form values from however your managing state"
+    ]
+  },
+  {
+    "question": "Is there a util to extract the values from decoded json data into a single object?",
+    "responses": [
+      "its just stringified JSON. You can use JSON.parse(decodedJsonObject)"
+    ]
+  },
+  {
+    "question": "Are you on farcaster? Bet you could use bountycaster and get like 10 people willing to help that way\n\nAlternatively if it can wait till late next week dm me and i or my team will spend an hour to help 🙏",
+    "responses": [
+      "Thanks, appreciate it!"
+    ]
+  },
+  {
+    "question": "Question for the group:\n\nOther than Coinbase's use of EAS, what do people consider to be the top 3 - 5 use cases of EAS currently in production?\n\nI'm asking, as I'm looking for references that I may not have seen to illustrate EAS value/adoption for a new platform we're starting to design.",
+    "responses": [
+      "identity + reputation + semi-private/private data sharing onchain/offchain it has too many use-cases to list but basically its a way to say something about anything with an EOA"
+    ]
+  },
+  {
+    "question": "Hey! Are you in touch with the SEI team? Would be great to connect with them and see how they could support EAS builders once deployed.",
+    "responses": [
+      "I am, going to mesaage you, thanks!"
+    ]
+  },
+  {
+    "question": "My orginal request wasn't clear - sorry about that.  My meaning is, does anyone have a view on any ACTUAL PRODUCTION USES of EAS?  It is helpful to be able to point to production examples as some proof of adoption when utilizing any product - particularly new products.",
+    "responses": [
+      "i see... is there a way to filter through schema data by total number of unique attestations? \nMaybe looking at the volume numbers will better answer that - not sure if theres a way to filter for 'top' schemas yet you could probably build a substream to do this"
+    ]
+  },
+  {
+    "question": "Hi everyone,\nConcerning adoption, I am sometimes wondering if the project is dead. The explorer is missing some testnets, according the doc, you should use the the explorer URL to use qraphQL. So we can use EAS and do tests only on Ethereum (forget it, too expensive), Base, Optimism and Scroll.\nThe forum looks dead and nobody updates the doc...\nWhat's going on guys?",
+    "responses": [
+      [
+        "The project is far from being dead. We are actually working around the clock on many initiatives (voluntarily with almost no funding, btw). \n\nYou can see all the available testnets here: ",
+        {
+          "type": "link",
+          "text": "https://github.com/ethereum-attestation-service/eas-contracts?tab=readme-ov-file#deployments"
+        }
+      ],
+      "which testnet are you missing ?"
+    ]
+  },
+  {
+    "question": "so it means I would have to fork the SDK and make a version specific to unsupported chains ?",
+    "responses": [
+      "The SDK already supports EVM chains"
+    ]
+  },
+  {
+    "question": "which testnet are you missing ?",
+    "responses": [
+      "I'd love the polygon explorer. Without it, can I use graphQL?"
+    ]
+  },
+  {
+    "question": "is it documented somewhere how to do it ?",
+    "responses": [
+      "No, easscan isn’t open source. It’s an app we maintain ourselves."
+    ]
+  },
+  {
+    "question": "Like testing on Ethereum Sepolia and running on Polygon?",
+    "responses": [
+      "Only for testing. If you need a testnet with an explorer, it’s a good option"
+    ]
+  },
+  {
+    "question": "when will the result come???",
+    "responses": [
+      "Admins Reply ?"
+    ]
+  },
+  {
+    "question": "Admins Reply ?",
+    "responses": [
+      "No"
+    ]
+  },
+  {
+    "question": "Hello, quick question: is EAS scan is open sourced? I couldn’t find the repo.",
+    "responses": [
+      "Hey! It’s a private repo. Are you looking for support on something specific?"
+    ]
+  },
+  {
+    "question": "Question about the privateData class: How do I generate a multiProof after I have already made an attestation? AFIAK the docs only mention creating the multiProof at the time of attestation.",
+    "responses": [
+      [
+        "Please look at the examples in the sdk readme. Generating a multiproof anytime is not a problem.  ",
+        {
+          "type": "link",
+          "text": "https://github.com/ethereum-attestation-service/eas-sdk"
+        }
+      ]
+    ]
+  },
+  {
+    "question": "any plans to deploy in dango ?",
+    "responses": [
+      "Hello, the contracts are opensourced and I have confirmed I have been able to deploy them on another testnet.\nAs Dango is an OpStack it may have EAS pre-deployed as for other Superchains.\nI can try to deploy the contracts on Dango if you want."
+    ]
+  },
+  {
+    "question": "Suppose that using OP Stack I fork a new chain, do I need to deploy the EAS smart contracts there? How would I be able to use EAS there?",
+    "responses": [
+      "It depends on which block you fork it, because it has to be after the EAS deployment was done."
+    ]
+  },
+  {
+    "question": "was just wondering if replying on the warpcast bountycaster post w the devfolio link was sufficient to be considered as a submission for EAS? 😅",
+    "responses": [
+      "Projects needed to submit on Devfolio! You submitted properly 👍😊"
+    ]
+  },
+  {
+    "question": "DId that work?",
+    "responses": [
+      "Yes"
+    ]
+  },
+  {
+    "question": "Is it possible to make nested properties in the schema or does it only have one dimension?",
+    "responses": [
+      "You can have arrays of tuples as one example"
+    ]
+  },
+  {
+    "question": "Not that I know of. What error are you getting and on what chain?",
+    "responses": [
+      "that's odd. I've tried sepolia, mainnet, and base mainnet"
+    ]
+  },
+  {
+    "question": "Could anyone please provide guidance on how to retrieve all the schemas created by a user/wallet address? Any references to the SDK documentation or examples would be greatly appreciated.\n\nThank you!",
+    "responses": [
+      [
+        {
+          "type": "link",
+          "text": "https://docs.attest.org/docs/developer-tools/api"
+        }
+      ]
+    ]
+  },
+  {
+    "question": "Any differences when using privateData schema on smartcontract?\n\nSeems the schema has only bytes32 privateData field. Then just encode the input data when attest using this schema, or needed some process to attest?",
+    "responses": [
+      "If you want to verify merkle proofs made with the private data mechanism you can use OpenZeppelins contracts for merkle proof verification"
+    ]
+  },
+  {
+    "question": "Hello guys , can everyone help me how I can deploy an EAS for Scroll canvas with their codes? thanks",
+    "responses": [
+      [
+        "Hey! Can you be more specific in what you're trying to achieve? Have you looked at the integration guide yet? ",
+        {
+          "type": "link",
+          "text": "https://scrollzkp.notion.site/Introducing-Scroll-Canvas-Badge-Integration-Guide-8656463ab63b42e8baf924763ed8c9d5"
+        }
+      ]
+    ]
+  },
+  {
+    "question": "hello all,\nis there any predefined steps to bring a new rollup to EAS and the Scanner as well? \nHappy to help on this but need to know what we have to do in order to achieve this 🤠",
+    "responses": [
+      "If it’s an OP stack rollup then it will have EAS built in. Otherwise we manually deploy L2s on a case by case basis depending on whether it makes sense to deploy resources for the indexer/explorer (mostly depending on how much developer activity the L2 has)"
+    ]
+  },
+  {
+    "question": "Hey, anyone knows if it's possible to work with Boost (formerly rabbithole) to incentivize people to issue attestations through EAS?",
+    "responses": [
+      "Anyone know of a questing platform that supports EAS actions (e.g. \"attest\") to incentize people to do stuff onchain?"
+    ]
+  },
+  {
+    "question": "hey guys! I'm querying the graphQL endpoint on optimism, trying to get some info about a particular schema and it looks like it is either timing out or broken.. maybe I'm not formatting my query right?",
+    "responses": [
+      [
+        {
+          "type": "pre",
+          "text": "export const GET_SCHEMA_BY_ID = gql`\n  query GetSchema($where: SchemaWhereUniqueInput!) {\n    getSchema(where: $where) {\n      id\n      schema\n      creator\n      resolver\n      revocable\n      index\n      txid\n      time\n      attestations {\n        id\n        data\n        decodedDataJson\n        recipient\n        attester\n        time\n        timeCreated\n        expirationTime\n        revocationTime\n        refUID\n        revocable\n        revoked\n        txid\n        schemaId\n        ipfsHash\n        isOffchain\n        schema {\n          id\n          index\n          creator\n        }\n      }\n    }\n  }\n`;\n\n",
+          "language": "javascript"
+        },
+        "\n\n",
+        {
+          "type": "pre",
+          "text": "\n\n\n const { loading, error, data } = useQuery(GET_SCHEMA_BY_ID, {\n    variables: {\n      where: {\n        id: schemaId,\n      },\n    },\n  });\n",
+          "language": "javascript"
+        },
+        "\n\nhere iam trying to get the schema info by id. feel free to filter by creator, id, index  and change the structure accordingly🙂"
+      ]
+    ]
+  },
+  {
+    "question": "can you add new attestations and revoke some existing ones in a single transaction?",
+    "responses": [
+      "I think you can use multicall3"
+    ]
+  },
+  {
+    "question": "I wish there could be some mutability as an attestation schema, otherwise the best way I found to create mutability is to revocle the original attestation, then attesting a new one with the refUID pointing to the revoked one. But this method creates a streamline of data that drains to much gas. \nThe team obviously have considered something like this before or the communtiy must have debated about it, could someone fill me in?",
+    "responses": [
+      "We have thought about this and we believe that modifying a schema creates backward compatibility issues and could potentially invalidate previous attestations."
+    ]
+  },
+  {
+    "question": "Is anyone using EAS for signing terms of service? Is that a reasonable use?",
+    "responses": [
+      "SIWE usually covers agreeing to TOS from what i've seen in the wild\n\nUsually where dapps link them",
+      "I haven’t seen it but I think it’s a great use case since it can be stored and proven at any time in the future to anyone as well as retaining a timestamp and other attestation features"
+    ]
+  },
+  {
+    "question": "would it still make sense if only off chain though?",
+    "responses": [
+      "Sure. If you’re company X and user Y signs the TOS as an offchain attestation from their address, you can store it and later reveal it to any entity that would want to verify it"
+    ]
+  },
+  {
+    "question": "whats c-atts ? Looks cool",
+    "responses": [
+      [
+        "C–ATTS is an engine that allows you to clone, migrate, combine, transform attestations. I launched a PoC late spring and am about to ship the real deal soon. Here is a slightly outdated article describing the setup: ",
+        {
+          "type": "link",
+          "text": "https://kristoferlund.se/blog/240214-catts"
+        },
+        ""
+      ]
+    ]
+  },
+  {
+    "question": "But I see that the versions between chains are super different. Any reason why?",
+    "responses": [
+      "They aren’t very different between chains."
+    ]
+  },
+  {
+    "question": "Anyone know of a questing platform that supports EAS actions (e.g. \"attest\") to incentize people to do stuff onchain?",
+    "responses": [
+      [
+        "Closest one that’s top of mind is scrolls new Canvas product. \n\n",
+        {
+          "type": "link",
+          "text": "https://scroll.io/blog/scroll-canvas-build-your-onchain-story#"
+        },
+        ""
+      ]
+    ]
+  },
+  {
+    "question": "Is there a public repo for the explorer?",
+    "responses": [
+      "It’s a private repo built on top of EAS! If you’re looking to do something custom, I’d use the OS indexer and create a custom explorer/experience based on the attestations that matter to your use case."
+    ]
+  },
+  {
+    "question": "Are you attesting on a chain where this schema exists? You should also check if this schema has a resolver with custom logic. It might be rejecting it.",
+    "responses": [
+      "Finally, it worked, thanks so much for helping me to unblock."
+    ]
+  },
+  {
+    "question": "Hi, which method I can get whole UID that attest with this schema with EAS SDK in Typescript?",
+    "responses": [
+      "Not sure what you mean. Can you rephrase the question?"
+    ]
+  },
+  {
+    "question": "Not sure what you mean. Can you rephrase the question?",
+    "responses": [
+      "I mean how solution to get all attestation that use this scheme via Typescript SDK?"
+    ]
+  },
+  {
+    "question": "I mean how solution to get all attestation that use this scheme via Typescript SDK?",
+    "responses": [
+      "Like .getAllAttestation() or something"
+    ]
+  }
+]
